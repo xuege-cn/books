@@ -1,0 +1,362 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Deno + ffmpeg + ossutil实现视频处理上传 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="aliyun-cli.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="deno-mc.html">
+            
+                <a href="deno-mc.html">
+            
+                    
+                    Deno + ffmpeg + ossutil实现视频处理上传
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="aliyun-cli.html">
+            
+                <a href="aliyun-cli.html">
+            
+                    
+                    aliyun-cli EcsRamRole方式上传文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Deno + ffmpeg + ossutil实现视频处理上传</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="denoffmpegossutil&#x5B9E;&#x73B0;&#x89C6;&#x9891;&#x5904;&#x7406;&#x4E0A;&#x4F20;">Deno+ffmpeg+ossutil&#x5B9E;&#x73B0;&#x89C6;&#x9891;&#x5904;&#x7406;&#x4E0A;&#x4F20;</h2>
+<p><a href="deno-mc.zip">&#x4E0B;&#x8F7D;&#x5305;</a></p>
+<h3 id="&#x5173;&#x4E8E;&#x8DF3;&#x677F;&#x673A;">&#x5173;&#x4E8E;&#x8DF3;&#x677F;&#x673A;</h3>
+<p>&#x8DF3;&#x677F;&#x673A;&#x7684;&#x767B;&#x9646;   </p>
+<pre><code>ssh qiangxu@jump.yuceyi.com -p 2222
+&#x5BC6;&#x7801;&#xFF1A;lo*********
+
+&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#xFF1A;ORG-test-node-web-02
+&#x9884;&#x53D1;&#x73AF;&#x5883;&#xFF1A;ORG-pre-node-web-01
+</code></pre><h4 id="&#x6D4B;&#x8BD5;&#x673A;&#x5668;&#x76EE;&#x5F55;">&#x6D4B;&#x8BD5;&#x673A;&#x5668;&#x76EE;&#x5F55;</h4>
+<pre><code>/home/admin/apps&#xFF1A;&#x9879;&#x76EE;&#x76EE;&#x5F55;
+/home/admin/opt&#xFF1A;cmd&#x547D;&#x4EE4;&#x96C6;
+/home/admin/source&#xFF1A;&#x7B2C;&#x4E09;&#x65B9;&#x8D44;&#x6E90;&#xFF0C;&#x6BD4;&#x5982;ffmpeg&#x6E90;&#x6587;&#x4EF6;&#x5C31;&#x5728;&#x8FD9;
+</code></pre><h3 id="deno&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x914D;&#x7F6E;">Deno&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x914D;&#x7F6E;</h3>
+<h4 id="&#x4E00;&#x4EFD;sh&#x8DD1;&#x591A;&#x4E2A;&#x573A;&#x666F;">&#x4E00;&#x4EFD;sh&#x8DD1;&#x591A;&#x4E2A;&#x573A;&#x666F;</h4>
+<pre><code>#!/bin/bash
+
+if ! [[ -x &quot;$(which deno)&quot; ]]; then
+  if ! [[ -x &quot;$HOME/.deno/bin/deno&quot; ]]; then
+    curl -fsSL https://deno.land/x/install/install.sh | sh
+  fi
+
+  export PATH=$HOME/.deno/bin:$PATH
+fi
+
+case $1 in
+  start)
+    &quot;$(which deno)&quot; run \
+      --allow-all \
+      $2
+    ;;
+  bundle)
+    &quot;$(which deno)&quot; bundle \
+      --unstable \
+      $2 $3
+    ;;
+  stop)
+    echo &apos;stop&apos;
+    ;;
+esac
+</code></pre><h4 id="&#x5982;&#x4F55;&#x505C;&#x6B62;&#x7A0B;&#x5E8F;">&#x5982;&#x4F55;&#x505C;&#x6B62;&#x7A0B;&#x5E8F;</h4>
+<p>&#x76EE;&#x524D;&#x6CA1;&#x6709;&#x5982;node&#x7684;process&#x5904;&#x7406;&#xFF0C;&#x505C;&#x6B62;&#x7A0B;&#x5E8F;&#x9700;&#x8981;&#x624B;&#x52A8;&#x6740;&#xFF1A;</p>
+<pre><code>pkill -9 deno
+</code></pre><h4 id="owl&#x914D;&#x7F6E;">owl&#x914D;&#x7F6E;</h4>
+<ol>
+<li>&#x6784;&#x5EFA;&#x6A21;&#x5F0F;&#xFF1A;NPM(js npm&#x6784;&#x5EFA;)</li>
+<li>&#x90E8;&#x7F72;&#x6A21;&#x5F0F;&#xFF1A;NODE_JS(&#x63A8;&#x9001;&#x90E8;&#x7F72;&#x5305;&#x5E76;&#x6267;&#x884C;node&#x542F;&#x52A8;&#x811A;&#x672C;)   </li>
+</ol>
+<h4 id="&#x8DE8;&#x57DF;&#x5904;&#x7406;">&#x8DE8;&#x57DF;&#x5904;&#x7406;</h4>
+<pre><code>import { oakCors } from &apos;https://deno.land/x/cors/mod.ts&apos;
+app.use(oakCors())
+</code></pre><h3 id="ffmpeg">ffmpeg</h3>
+<p>ffmpeg&#x6E90;&#x7801;&#x5305;&#x4E0B;&#x8F7D;&#xFF1A;</p>
+<pre><code>https://ffmpeg.org/download.html
+</code></pre><h4 id="ffmpeg&#x53C2;&#x6570;&#x8BBE;&#x7F6E;">ffmpeg&#x53C2;&#x6570;&#x8BBE;&#x7F6E;</h4>
+<p>&#x4E3A;&#x5565;&#x8981;&#x8BBE;&#x7F6E;ffmpeg&#xFF1F;&#x6BD4;&#x5982;&#x4F60;&#x5982;&#x679C;&#x8981;&#x8FDB;&#x884C;&#x89C6;&#x9891;libx264&#x7F16;&#x7801;&#xFF0C;&#x90A3;&#x4E48;&#x4E0D;&#x8FDB;&#x884C;&#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#xFF0C;&#x4F1A;&#x62B1;unknown encoder libx264&#x7684;&#x9519;&#x8BEF;&#x274C;<br>&#x5982;&#x679C;&#x8BBE;&#x7F6E;&#x5462;&#xFF1F;&#x62FF;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x4E3E;&#x4F8B;&#xFF1A;   </p>
+<pre><code>&lt;!-- &#x627E;&#x5230;ffmpeg&#x6E90;&#x6587;&#x4EF6; --&gt;
+cd /home/admin/source/ffmpeg
+
+&lt;!-- &#x8BBE;&#x7F6E;&#x53C2;&#x6570; --&gt;
+&#x7B2C;&#x4E00;&#x6B65;&#xFF1A; ./configure --prefix=/usr/local --disable-debug --enable-shared --enable-gpl --enable-nonfree --enable-postproc --enable-swscale --enable-pthreads --enable-x11grab --enable-libx264 --enable-libxvid --enable-libvorbis --enable-libfaac --enable-libmp3lame
+
+&lt;!-- &#x6253;&#x5305; --&gt;
+&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;make
+
+&lt;!-- &#x5B89;&#x88C5; --&gt;
+&#x7B2C;&#x4E09;&#x6B65;&#xFF1A;sudo make install
+</code></pre><p>&#x2705; &#x5B8C;&#x6210;&#x8FD9;&#x4E09;&#x6B65;&#x4E4B;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;/home/admin/opt/ffmpeg/bin&#x4E0B;&#x627E;&#x5230;&#x4E09;&#x4E2A;&#xFF1A;ffmpeg&#x7B49;   </p>
+<p>&#x90A3;&#x4E48;&#x76EE;&#x524D;&#x547D;&#x4EE4;&#x5728;opt&#x4E0B;&#xFF0C;&#x800C;&#x5E76;&#x4E0D;&#x5728;usr/lcoal&#xFF0C;&#x6240;&#x4EE5;&#x547D;&#x4EE4;&#x884C;&#x76F4;&#x63A5;&#x8FD0;&#x884C;ffmpeg&#xFF0C;&#x4F1A;&#x53D1;&#x73B0;&#x662F;&#x627E;&#x4E0D;&#x5230;&#x7684;   </p>
+<h4 id="ffmpeg&#x8F6F;&#x8FDE;&#x63A5;">ffmpeg&#x8F6F;&#x8FDE;&#x63A5;</h4>
+<pre><code>sudo ln -s /home/admin/opt/ffmpeg/bin/ffmpeg /usr/local/bin/ffmpeg
+</code></pre><p>&#x8F6F;&#x94FE;&#x4E4B;&#x540E;&#xFF0C;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x518D;&#x6B21;&#x8FD0;&#x884C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;ffmpeg&#x6307;&#x4EE4;&#x5DF2;&#x7ECF;&#x751F;&#x6548;   </p>
+<h4 id="ffmpeg&#x547D;&#x4EE4;&#x884C;">ffmpeg&#x547D;&#x4EE4;&#x884C;</h4>
+<p>&#x547D;&#x4EE4;&#x884C;&#x4E3B;&#x8981;&#x662F;&#x6267;&#x884C;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;   </p>
+<pre><code>/usr/local/bin/ffmpeg -i uploads/2.mp4 -c:v libx264 -c:a aac -s 800x800 uploads/ffmpeg.mp4
+</code></pre><p>&#x5C31;&#x662F;&#x8DD1;&#x8FD9;&#x4E48;&#x4E00;&#x884C;&#xFF0C;&#x5C31;&#x5B8C;&#x4E8B;&#x4E86;&#xFF0C;ffmpeg.ts&#x5B9E;&#x4F8B;&#x7684;&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x4E5F;&#x5C31;&#x662F;&#x7EC4;&#x88C5;&#x8FD9;&#x4E00;&#x884C;&#x547D;&#x4EE4;</p>
+<h3 id="ossutil">ossutil</h3>
+<p>&#x4E0B;&#x8F7D;ossutil:   </p>
+<ol>
+<li>wget <a href="http://gosspublic.alicdn.com/ossutil/1.6.17/ossutil64" target="_blank">http://gosspublic.alicdn.com/ossutil/1.6.17/ossutil64</a>   </li>
+<li>chmod 755 ossutil64</li>
+<li>./ossutil64 config   </li>
+</ol>
+<p>config&#x8BBE;&#x7F6E;key&#x7B49;&#xFF1A;</p>
+<pre><code>AccessKey&#xFF1A; 
+accessKeySecret&#xFF1A; 
+bucket&#xFF1A;cf-mc
+endpoint&#xFF1A;oss-cn-hangzhou.aliyuncs.com
+region: oss-cn-hangzhou
+stsToken: // &#x4E0D;&#x586B;&#xFF0C;&#x76F4;&#x63A5;&#x56DE;&#x8F66;
+</code></pre><h4 id="ossutil&#x547D;&#x4EE4;">ossutil&#x547D;&#x4EE4;</h4>
+<pre><code>./ossutil64 cp uploads/2.mp4 oss://cf_mc/1.mp4
+</code></pre><h3 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h3>
+<ul>
+<li>1.&#x89C6;&#x9891;&#x5904;&#x7406;&#x4E4B;&#x540E;&#xFF0C;&#x4F53;&#x79EF;&#x589E;&#x5927;&#x4E00;&#x500D;&#xFF0C;&#x4E0A;&#x4F20;11M&#xFF0C;&#x5904;&#x7406;&#x5B8C;&#x7684;&#x6587;&#x4EF6;22M</li>
+<li>2.ossutil&#x4E0A;&#x4F20;&#x901F;&#x5EA6;&#x5F88;&#x6162;&#xFF0C;21KB/S&#x7684;&#x4E0A;&#x4F20;&#x901F;&#x5EA6;&#xFF0C;22M&#x9700;&#x8981;&#x4E0A;&#x4F20;18&#x5206;&#x949F;</li>
+<li>3.&#x89C6;&#x9891;&#x53D8;&#x5F62;&#x53EA;&#x80FD;&#x7B49;&#x6BD4;&#x53D8;&#x5F62;&#xFF0C;&#x6BD4;&#x5982;500x400&#xFF0C;&#x53D8;&#x5F62;800x800&#xFF0C;&#x53D8;&#x5F62;&#x4E4B;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x662F;1000x800</li>
+<li>4.oakserver/oak<ul>
+<li>4.1bug&#xFF1A;&#x5728;&#x8C03;&#x7528;&#x4E86;await&#x4E4B;&#x540E;&#xFF0C;ctx.response.body&#x8D4B;&#x503C;&#x4F1A;&#x63D0;&#x793A;&#xFF1A;response is not writable.</li>
+<li>4.2issue&#xFF1A;<a href="https://github.com/oakserver/oak/pull/156" target="_blank">https://github.com/oakserver/oak/pull/156</a> </li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="aliyun-cli.html" class="navigation navigation-next " aria-label="Next page: aliyun-cli EcsRamRole方式上传文件">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Deno + ffmpeg + ossutil实现视频处理上传","level":"1.2","depth":1,"next":{"title":"aliyun-cli EcsRamRole方式上传文件","level":"1.3","depth":1,"path":"aliyun-cli.md","ref":"aliyun-cli.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"deno-mc.md","mtime":"2020-07-17T08:39:32.435Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-17T07:03:29.918Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

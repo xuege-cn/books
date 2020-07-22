@@ -1,0 +1,403 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>1.1 编译入口 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="PARSE.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    1. 编译部分
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="GATEWAY.html">
+            
+                <a href="GATEWAY.html">
+            
+                    
+                    1.1 编译入口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="PARSE.html">
+            
+                <a href="PARSE.html">
+            
+                    
+                    1.2 模版解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="OPTIMISE.html">
+            
+                <a href="OPTIMISE.html">
+            
+                    
+                    1.3 AST优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="GENERATE.html">
+            
+                <a href="GENERATE.html">
+            
+                    
+                    1.4 代码生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >1.1 编译入口</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x4ECE;&#x6784;&#x9020;&#x51FD;&#x6570;&#x8BF4;&#x8D77;">&#x4ECE;&#x6784;&#x9020;&#x51FD;&#x6570;&#x8BF4;&#x8D77;</h2>
+<h3 id="vue&#x5B9E;&#x4F8B;&#x521B;&#x5EFA;">vue&#x5B9E;&#x4F8B;&#x521B;&#x5EFA;</h3>
+<p>&#x1F9D0; &#x629B;&#x5F00;vue-loader&#x4E0D;&#x8BF4;&#xFF0C;&#x5C31;&#x4ECE;&#x6700;&#x539F;&#x59CB;&#x7684;vue&#x4F7F;&#x7528;&#x65B9;&#x5F0F;&#x6765;&#x770B;&#x770B;&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;vue&#x5B9E;&#x4F8B;   </p>
+<h4 id="&#x6A21;&#x7248;">&#x6A21;&#x7248;</h4>
+<pre><code>&lt;div id=&quot;app&quot; class=&quot;container&quot;&gt;
+    &lt;template v-if=&quot;name === &apos;xuqiang&apos;&quot;&gt;
+        &lt;div @click=&quot;click&quot;&gt;my name is&lt;/div&gt;
+        &lt;div v-for=&quot;(item, index, index1) in 3&quot;&gt;{{name}}&lt;/div&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+</code></pre><h4 id="&#x5B9E;&#x4F8B;&#x521B;&#x5EFA;">&#x5B9E;&#x4F8B;&#x521B;&#x5EFA;</h4>
+<pre><code>new Vue({
+    el: &apos;#app&apos;,
+    data () {
+        return {
+            name: &apos;xuqiang&apos;
+        }
+    },
+    methods: {
+        click () {
+            alert(&apos;hahaha&apos;)
+            console.log(&apos;it is clicked!&apos;)
+        }
+    }
+})
+</code></pre><p>&#x1F64A; Amazing&#xFF01;&#x5230;&#x8FD9;&#x91CC;&#x4E00;&#x4E2A;Vue&#x5E94;&#x7528;&#x5C31;&#x80FD;&#x7528;&#x4E86;&#xFF0C;&#x6570;&#x636E;&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#xFF0C;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#x5565;&#x7684;&#x5C31;&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x4E86;&#x1F680;&#x1F680;&#x1F680;<br>&#x1F9D0; &#x90A3;&#x4E48;&#x8BA9;&#x6211;&#x4EEC;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x7684;&#x6252;&#x5F00;Vue&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x770B;&#x770B;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x7684;&#x6A21;&#x7248;&#x89E3;&#x6790;</p>
+<h3 id="&#x6A21;&#x7248;&#x7F16;&#x8BD1;&#x5165;&#x53E3;">&#x6A21;&#x7248;&#x7F16;&#x8BD1;&#x5165;&#x53E3;</h3>
+<p><strong>Vue&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5C31;&#x53EA;&#x6267;&#x884C;&#x4E86;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;_init</strong></p>
+<pre><code>function Vue (options) {
+    this._init(options)
+}
+</code></pre><p>_init&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x5728;core/instance/init.js&#x1F004;&#xFE0F;&#xFF0C;_init&#x51FD;&#x6570;&#x4E2D;&#x524D;&#x9762;&#x4F1A;&#x53BB;&#x6267;&#x884C;&#x521D;&#x59CB;&#x5316;&#x751F;&#x547D;&#x5468;&#x671F;&#x554A;&#xFF0C;&#x4E8B;&#x4EF6;&#x554A;&#x7B49;&#x7B49;<br>&#x6700;&#x540E;&#x26A0;&#xFE0F; &#x91CD;&#x70B9;&#x6765;&#x4E86;&#x1F447;</p>
+<pre><code>vm.$mount(vm.$options.el)
+</code></pre><p>&#x987E;&#x540D;&#x601D;&#x4E49;&#xFF1A;&#x5F00;&#x59CB;&#x5B89;&#x88C5;&#x4E86;<br><strong>&#x90A3;&#x4E48;&#x5B83;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x7F16;&#x8BD1;&#x7684;&#x5165;&#x53E3;</strong></p>
+<h2 id="web&#x5E73;&#x53F0;&#x4E0B;&#x7684;&#x6A21;&#x7248;&#x89E3;&#x6790;">WEB&#x5E73;&#x53F0;&#x4E0B;&#x7684;&#x6A21;&#x7248;&#x89E3;&#x6790;</h2>
+<p>web&#x5E73;&#x53F0;&#x4E0B;&#x7684;$mount&#x5B9A;&#x4E49;&#x5728;src/platforms/web/entry-runtime-with-compiler.js&#x4E2D;<br>&#x5728;$mount&#x7684;&#x5165;&#x53E3;&#x5904;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E00;&#x4E2A;&#x9A9A;&#x64CD;&#x4F5C;&#x1F483;   </p>
+<pre><code>const mount = Vue.prototype.$mount
+Vue.prototype.$mount = function...
+</code></pre><p><strong>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x8FD9;&#x4E48;&#x5904;&#x7406;&#x5462;&#xFF1F;</strong><br>&#x8FD9;&#x91CC;&#x6211;&#x8BA4;&#x4E3A;&#x4E3B;&#x8981;&#x662F;&#x56E0;&#x4E3A;&#x1F447;&#xFF1A;<br>&#x4F7F;&#x539F;&#x65B9;&#x6CD5;mount&#x66F4;&#x7EAF;&#x51C0;&#xFF1A;&#x53EA;&#x662F;&#x4F5C;&#x4E3A;&#x5B89;&#x88C5;&#x7EC4;&#x4EF6;&#xFF0C;&#x800C;&#x65B0;$mount&#x5305;&#x542B;&#x4E86;&#x6A21;&#x7248;&#x7F16;&#x8BD1;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x8FD9;&#x7B26;&#x5408;&#x88C5;&#x9970;&#x5668;&#x7684;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;   </p>
+<h3 id="&#x5982;&#x4F55;&#x83B7;&#x53D6;&#x6839;&#x8282;&#x70B9;">&#x5982;&#x4F55;&#x83B7;&#x53D6;&#x6839;&#x8282;&#x70B9;</h3>
+<p>&#x83B7;&#x53D6;&#x6839;&#x8282;&#x70B9;&#x7684;&#x65B9;&#x6CD5;query&#x5B9A;&#x4E49;&#x5728;src/platforms/web/util/index.js&#x4E2D;</p>
+<pre><code>export function query (el) {
+    if (typeof el === &apos;string&apos;) {
+        const selected = document.querySelector(el)
+        if (!selected) {
+            return document.createElement(&apos;div&apos;)
+        }
+        return selected
+    } else {
+        return el
+    }
+}
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8FD9;&#x91CC;&#x505A;&#x4E86;&#x4E24;&#x4E2A;&#x515C;&#x5E95;&#x1F447;&#xFF1A;   </p>
+<ol>
+<li>&#x5224;&#x65AD;el&#x4E3A;string&#x7C7B;&#x578B;&#x624D;&#x8FDB;&#x884C;&#x83B7;&#x53D6;</li>
+<li>&#x5F53;&#x53D6;&#x4E0D;&#x5230;&#x76F8;&#x5173;&#x8282;&#x70B9;&#x65F6;&#xFF0C;createElement&#x4E00;&#x4E2A;div   </li>
+</ol>
+<h3 id="&#x6839;&#x8282;&#x70B9;&#x7684;&#x8981;&#x6C42;">&#x6839;&#x8282;&#x70B9;&#x7684;&#x8981;&#x6C42;</h3>
+<p>&#x6839;&#x8282;&#x70B9;&#x6709;&#x5565;&#x8981;&#x6C42;&#x5462;&#xFF1F;&#x53EF;&#x80FD;&#x5728;&#x5177;&#x4F53;&#x5F00;&#x53D1;&#x4E2D;&#x6CA1;&#x6CE8;&#x610F;&#x8FC7;&#xFF0C;&#x5176;&#x5B9E;&#x6839;&#x8282;&#x70B9;&#x4E0D;&#x80FD;&#x662F;body&#x6216;&#x8005;html&#xFF0C;&#x53EF;&#x4EE5;&#x8BD5;&#x60F3;&#x5982;&#x679C;&#x662F;&#x8FD9;&#x4E24;&#x8005;&#x88AB;&#x66FF;&#x6362;&#x4E86;&#xFF0C;&#x90A3;&#x4E48;&#x6587;&#x6863;&#x8FD8;&#x7B26;&#x5408;&#x89C4;&#x8303;&#x5417;&#xFF1F;</p>
+<pre><code>if (el === document.body || el === document.documentElement) {
+    return this
+}
+</code></pre><h3 id="template&#x83B7;&#x53D6;">template&#x83B7;&#x53D6;</h3>
+<p>OK! &#x83B7;&#x53D6;el&#x5E76;&#x5224;&#x65AD;&#x5176;&#x5408;&#x6CD5;&#x4E4B;&#x540E;&#xFF0C;&#x5C31;&#x5F00;&#x59CB;&#x83B7;&#x53D6;template&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EA;&#x8BB2;&#x6B64;&#x6587;&#x9876;&#x90E8;&#x6700;&#x7B80;&#x5355;&#x7684;&#x5B9E;&#x4F8B;&#x4E2D;&#x662F;&#x5982;&#x4F55;&#x83B7;&#x53D6;template&#x7684;</p>
+<pre><code>template = getOuterHTML(el)
+</code></pre><p>&#x54B1;&#x4EEC;&#x8FD9;&#x4E2A;demo&#x4F1A;&#x8D70;&#x5230;&#x8FD9;&#x4E2A;&#x5206;&#x652F;&#xFF0C;&#x901A;&#x8FC7;getOuterHTML&#x65B9;&#x6CD5;&#x83B7;&#x53D6;template&#xFF0C;&#x6765;&#x770B;&#x770B;getOuterHTML&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x7684;&#x3002;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x5B9A;&#x4E49;&#x5728;entry-runtime-with-compiler.js&#x7684;&#x5E95;&#x90E8;</p>
+<pre><code>function getOuterHTML (el) {
+    if (el.outerHTML) {
+        return el.outerHTML
+    } else {
+        const container = document.createElement(&apos;div&apos;)
+        container.appendChild(el.cloneNode(true))
+        return container.innerHTML
+    }
+}
+</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x540C;&#x6837;&#x505A;&#x4E86;&#x515C;&#x5E95;&#x64CD;&#x4F5C;&#x1F447;&#xFF1A;   </p>
+<ul>
+<li>el.outerHTML&#x5B58;&#x5728;&#x5219;&#x8FD4;&#x56DE;</li>
+<li>&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#xFF0C;&#x5148;&#x5EFA;&#x4E00;&#x4E2A;&#x5BB9;&#x5668;&#xFF0C;&#x590D;&#x5236;&#x4E00;&#x4E2A;el&#x653E;&#x8FDB;&#x53BB;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x8BE5;&#x5BB9;&#x5668;&#x7684;innerHTML</li>
+</ul>
+<h3 id="template&#x8F6C;&#x5316;&#x4E3A;render&#x51FD;&#x6570;">template&#x8F6C;&#x5316;&#x4E3A;render&#x51FD;&#x6570;</h3>
+<p>&#x6709;&#x4E86;template&#xFF0C;&#x4E0B;&#x9762;&#x5C31;&#x662F;&#x7F16;&#x8BD1;&#x7684;&#x6838;&#x5FC3;&#xFF1A;   </p>
+<blockquote>
+<p>&#x628A;template&#x8F6C;&#x5316;&#x4E3A;render&#x51FD;&#x6570;   </p>
+</blockquote>
+<pre><code>const { render, staticRenderFns } = compileToFunctions(template, options)
+</code></pre><p>compileToFunctions&#x6765;&#x81EA;src/platforms/web/compiler/index.js&#x4E2D;&#xFF0C;&#x662F;&#x901A;&#x8FC7;createCompiler&#x521B;&#x5EFA;&#x7684;<br><strong>&#x800C;&#x8FD9;&#x4E2A;createCompiler&#x6765;&#x81EA;src/compiler/index.js&#xFF0C;&#x5176;&#x4FBF;&#x662F;&#x521B;&#x5EFA;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x5165;&#x53E3;</strong></p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x515C;&#x515C;&#x7ED5;&#x7ED5;&#x7684;&#x770B;&#x4E86;&#x4E00;&#x5708;&#xFF0C;&#x7F16;&#x8BD1;&#x5165;&#x53E3;&#x8BB2;&#x7684;&#x5927;&#x81F4;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>$mount&#x662F;Vue&#x5F00;&#x59CB;&#x89E3;&#x6790;&#x6A21;&#x7248;&#x5B89;&#x88C5;&#x7EC4;&#x4EF6;&#x7684;&#x5165;&#x53E3;</li>
+<li>$mount&#x65B9;&#x6CD5;&#x56DB;&#x4E2A;&#x4F5C;&#x7528;&#xFF1A;<ul>
+<li>&#x83B7;&#x53D6;el</li>
+<li>&#x83B7;&#x53D6;template</li>
+<li>template&#x8F6C;&#x5316;&#x4E3A;render&#x51FD;&#x6570;</li>
+<li>&#x8C03;&#x7528;&#x539F;$mount&#x5B89;&#x88C5;&#x7EC4;&#x4EF6;</li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 1. 编译部分">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="PARSE.html" class="navigation navigation-next " aria-label="Next page: 1.2 模版解析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"1.1 编译入口","level":"1.2.1","depth":2,"next":{"title":"1.2 模版解析","level":"1.2.2","depth":2,"path":"compiler/PARSE.md","ref":"compiler/PARSE.md","articles":[]},"previous":{"title":"1. 编译部分","level":"1.2","depth":1,"path":"compiler/README.md","ref":"compiler/README.md","articles":[{"title":"1.1 编译入口","level":"1.2.1","depth":2,"path":"compiler/GATEWAY.md","ref":"compiler/GATEWAY.md","articles":[]},{"title":"1.2 模版解析","level":"1.2.2","depth":2,"path":"compiler/PARSE.md","ref":"compiler/PARSE.md","articles":[]},{"title":"1.3 AST优化","level":"1.2.3","depth":2,"path":"compiler/OPTIMISE.md","ref":"compiler/OPTIMISE.md","articles":[]},{"title":"1.4 代码生成","level":"1.2.4","depth":2,"path":"compiler/GENERATE.md","ref":"compiler/GENERATE.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"compiler/GATEWAY.md","mtime":"2020-06-23T09:52:01.481Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-06T06:07:35.226Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,497 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>1.2 模版解析 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="OPTIMISE.html" />
+    
+    
+    <link rel="prev" href="GATEWAY.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    1. 编译部分
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="GATEWAY.html">
+            
+                <a href="GATEWAY.html">
+            
+                    
+                    1.1 编译入口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="PARSE.html">
+            
+                <a href="PARSE.html">
+            
+                    
+                    1.2 模版解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="OPTIMISE.html">
+            
+                <a href="OPTIMISE.html">
+            
+                    
+                    1.3 AST优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="GENERATE.html">
+            
+                <a href="GENERATE.html">
+            
+                    
+                    1.4 代码生成
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >1.2 模版解析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x89E3;&#x6790;&#x5165;&#x53E3;">&#x89E3;&#x6790;&#x5165;&#x53E3;</h2>
+<blockquote>
+<p>&#x7F16;&#x8BD1;&#x5165;&#x53E3;&#x8BB2;&#x5230;&#x4E86;src/compiler/index.js&#x7684;createCompiler&#x65B9;&#x6CD5;   </p>
+</blockquote>
+<pre><code>export const createCompiler = createCompilerCreator(function baseCompile (
+    template: string,
+    options: CompilerOptions
+) {
+    const ast = parse(template.trim(), options)
+    if (options.optimize !== false) {
+        optimize(ast, options)
+    }
+    const code = generate(ast, options)
+    return {
+        ast,
+        render: code.render,
+        staticRenderFns: code.staticRenderFns
+    }
+})
+</code></pre><p>&#x5176;&#x4E2D;&#x7684;parse&#x65B9;&#x6CD5;&#x4FBF;&#x662F;&#x89E3;&#x6790;template&#x4E3A;ast&#x1F332;&#xFF0C;&#x90A3;&#x4E48;&#x5177;&#x4F53;&#x770B;&#x770B;parse&#x51FD;&#x6570;&#x662F;&#x5982;&#x4F55;&#x89E3;&#x6790;&#x7684;</p>
+<h2 id="parse&#x65B9;&#x6CD5;">parse&#x65B9;&#x6CD5;</h2>
+<blockquote>
+<p>parse&#x65B9;&#x6CD5;&#x662F;&#x5728;src/compiler/parser/index.js&#x4E2D;   </p>
+</blockquote>
+<p><strong>&#x7CBE;&#x9AD3;&#x5728;parseHTML</strong>   </p>
+<blockquote>
+<p>parseHTML&#x5728;src/compiler/parser/html-parser.js&#x4E2D;   </p>
+</blockquote>
+<p>parseHTML&#x662F;&#x89E3;&#x6790;html&#x6A21;&#x7248;&#x7684;&#x6838;&#x5FC3;&#xFF0C;&#x63A5;&#x53D7;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li>template&#xFF1A;&#x5373;&#x6A21;&#x7248;</li>
+<li>options&#xFF1A;options&#x91CC;&#x6709;&#x914D;&#x7F6E;&#x9879;&#xFF0C;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x94A9;&#x5B50;&#x51FD;&#x6570;&#xFF0C;&#x5982;comment&#xFF0C;chars&#xFF0C;start&#x7B49;   </li>
+</ul>
+<h3 id="&#x89E3;&#x6790;&#x65B9;&#x6848;">&#x89E3;&#x6790;&#x65B9;&#x6848;</h3>
+<p>&#x6BD4;&#x5982;&#x62FF;&#x5230;&#x4E00;&#x4E2A;&#x6A21;&#x7248;&#xFF0C;&#x662F;&#x6839;&#x636E;outerHTML&#x83B7;&#x53D6;&#x7684;&#x6A21;&#x7248;&#xFF0C;&#x90A3;&#x4E48;&#x62FF;&#x5230;&#x7684;&#x6A21;&#x7248;&#x5176;&#x5B9E;&#x662F;&#x5982;&#x4E0B;&#x7684;&#x4E00;&#x4E32;&#x5B57;&#x7B26;&#x4E32;&#x1F447;&#xFF1A;   </p>
+<pre><code>&lt;div id=&quot;app&quot; class=&quot;container&quot;&gt;
+    &lt;template v-if=&quot;name === &apos;xuqiang&apos;&quot;&gt;
+        &lt;div @click=&quot;click&quot;&gt;my name is&lt;/div&gt;
+        &lt;div v-for=&quot;(item, index, index1) in 3&quot;&gt;{{name}}&lt;/div&gt;
+    &lt;/template&gt;
+&lt;/div&gt;
+</code></pre><p>&#x8FD9;&#x91CC;&#x6709;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;<br>&#x5982;&#x4F55;&#x5224;&#x65AD;&#x6A21;&#x7248;&#x683C;&#x5F0F;&#x662F;&#x5426;&#x89C4;&#x8303;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4E2A;&#x4E0D;&#x89C4;&#x8303;&#x7684;&#x6A21;&#x7248;&#x600E;&#x4E48;&#x529E;&#x5462;&#xFF1F;   </p>
+<pre><code>let textEnd = html.indexOf(&apos;&lt;&apos;)
+if (textEnd === 0) {
+    &lt;!-- &#x89C4;&#x8303;&#x6A21;&#x7248; --&gt;
+}
+if (textEnd &gt;= 0) {
+    &lt;!-- &lt;&#x524D;&#x9762;&#x7684;&#x4F5C;&#x4E3A;text&#xFF08;&#x6587;&#x672C;&#xFF09;&#x89E3;&#x6790;&#xFF0C;&#x4ECE;&lt;&#x5F00;&#x59CB;&#x4F5C;&#x4E3A;&#x89C4;&#x8303;&#x6A21;&#x7248;&#x89E3;&#x6790; --&gt;
+}
+if (textEnd &lt; 0) {
+    &lt;!-- &#x6574;&#x4E2A;&#x6A21;&#x7248;&#x4F5C;&#x4E3A;&#x6587;&#x672C; --&gt;
+    text = html
+}
+if (text) {
+    &lt;!-- &#x5982;&#x4F55;&#x662F;&#x6587;&#x672C;&#x6A21;&#x7248;&#xFF0C;&#x76F4;&#x63A5;&#x8D70;&#x8FC7;&#xFF0C;&#x4E0D;&#x89E3;&#x6790; --&gt;
+    advance(text.length)
+}
+</code></pre><p><strong>&#x1F973; Vue&#x4F7F;&#x7528;&#x7684;&#x662F;&#x6B63;&#x5219;&#x5339;&#x914D;</strong><br>&#x6BD4;&#x5982;&#x5339;&#x914D;&#x5230;&#x6CE8;&#x91CA;&#xFF0C;&#x628A;&#x6CE8;&#x91CA;&#x89E3;&#x6790;&#x51FA;&#x6765;&#xFF0C;&#x7136;&#x540E;&#x628A;html substring&#x4E4B;&#x540E;&#x91CD;&#x65B0;&#x8D4B;&#x503C;&#x7ED9;html&#xFF0C;&#x8FD9;&#x6837;html&#x5C31;&#x7F29;&#x77ED;&#x4E86;&#x3002;&#x957F;&#x6B64;&#x4EE5;&#x5F80;&#xFF0C;while(html)&#x76F4;&#x5230;html&#x5168;&#x88AB;&#x89E3;&#x6790;<br>&#x90A3;&#x4E48;&#x8FD9;&#x91CC;&#x6709;&#x4E2A;&#x6CE8;&#x610F;&#x70B9;&#x662F;&#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x6240;&#x6709;&#x8282;&#x70B9;&#x90FD;&#x80FD;&#x88AB;&#x89E3;&#x6790;&#xFF0C;&#x4E0D;&#x7136;&#x53EF;&#x80FD;&#x4F1A;&#x6709;bug&#xFF0C;parse&#x8FC7;&#x7A0B;&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x51E0;&#x7C7B;&#xFF1A;</p>
+<ol>
+<li>&#x6CE8;&#x91CA;</li>
+<li>Doctype</li>
+<li>&#x7ED3;&#x675F;&#x6807;&#x7B7E;</li>
+<li>&#x5F00;&#x59CB;&#x6807;&#x7B7E;</li>
+</ol>
+<p>&#x8FD9;&#x56DB;&#x7C7B;&#x5C31;&#x6DB5;&#x76D6;&#x4E86;&#x6240;&#x6709;&#x89E3;&#x6790;&#x8282;&#x70B9;   </p>
+<h3 id="&#x6CE8;&#x91CA;&#x8282;&#x70B9;&#x89E3;&#x6790;">&#x6CE8;&#x91CA;&#x8282;&#x70B9;&#x89E3;&#x6790;</h3>
+<p>HTML&#x4E2D;&#x6CE8;&#x91CA;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x4E24;&#x7C7B;&#xFF1A;</p>
+<ol>
+<li>&#x666E;&#x901A;&#x6CE8;&#x91CA;<pre><code>&lt;!-- &#x6211;&#x662F;&#x4E2A;&#x666E;&#x901A;&#x6CE8;&#x91CA;&#x554A; --&gt;
+</code></pre></li>
+<li>&#x6761;&#x4EF6;&#x6CE8;&#x91CA;<pre><code>&lt;!--[if lt IE 7]&gt;
+</code></pre></li>
+</ol>
+<h4 id="&#x666E;&#x901A;&#x6CE8;&#x91CA;&#x89E3;&#x6790;">&#x666E;&#x901A;&#x6CE8;&#x91CA;&#x89E3;&#x6790;</h4>
+<pre><code>const comment = /^&lt;!\--/
+if (comment.test(html)) {
+    const commentEnd = html.indexOf(&apos;--&gt;&apos;)
+
+    if (commentEnd &gt;= 0) {
+        if (options.shouldKeepComment) {
+            options.comment(html.substring(4, commentEnd), index, index + commentEnd + 3)
+        }
+        advance(commentEnd + 3)
+        continue
+    }
+}
+</code></pre><p>&#x4ECE;&#x4EE3;&#x7801;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF1A;</p>
+<ul>
+<li>&#x7528;&#x6B63;&#x5219;&#x5339;&#x914D;&#x666E;&#x901A;&#x6CE8;&#x91CA;&#x5F00;&#x59CB;&#x6807;&#x7B7E;</li>
+<li>&#x7528;indexOf&#x83B7;&#x53D6;&#x666E;&#x901A;&#x6CE8;&#x91CA;&#x7ED3;&#x675F;&#x6807;&#x7B7E;   </li>
+</ul>
+<p>&#x5F53;&#x4E24;&#x8005;&#x7686;&#x4E3A;true&#x65F6;&#x5224;&#x4E3A;comment&#x5B58;&#x5728;&#x6210;&#x7ACB;&#x1F973;<br>advance&#x662F;&#x5565;&#xFF1F;&#x1F928;   </p>
+<pre><code>function advance (n) {
+    index += n
+    html = html.substring(n)
+}
+</code></pre><p>&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x628A;&#x5DF2;&#x89E3;&#x6790;&#x7684;&#x4EE3;&#x7801;&#x7247;&#x6BB5;&#x5220;&#x6389;&#xFF0C;&#x7136;&#x540E;&#x7D22;&#x5F15;&#x8D70;&#x5230;&#x5F53;&#x524D;&#x89E3;&#x6790;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E0B;&#x4E00;&#x6B65;&#x7684;&#x610F;&#x601D;<br>&#x1F680; &#x8FD9;&#x91CC;&#x54B1;&#x4EEC;&#x6682;&#x65F6;&#x4E0D;&#x5173;&#x6CE8;shouldKeepComment&#x548C;options.comment&#x4E86;&#x3002;&#x56E0;&#x4E3A;&#x8FD9;&#x5BF9;&#x6211;&#x4EEC;&#x7406;&#x89E3;&#x89E3;&#x6790;&#x4E3B;&#x6D41;&#x7A0B;&#x6CA1;&#x6709;&#x5F71;&#x54CD;</p>
+<h4 id="&#x6761;&#x4EF6;&#x6CE8;&#x91CA;&#x89E3;&#x6790;">&#x6761;&#x4EF6;&#x6CE8;&#x91CA;&#x89E3;&#x6790;</h4>
+<p>&#x7C7B;&#x4F3C;&#x666E;&#x901A;&#x6CE8;&#x91CA;&#xFF0C;&#x4E0D;&#x8FC7;&#x6761;&#x4EF6;&#x6CE8;&#x91CA;&#x66F4;&#x7B80;&#x5355;&#xFF0C;&#x662F;&#x76F4;&#x63A5;&#x89E3;&#x6790;&#x51FA;&#x6765;&#x5C31;advance&#x4E86;   </p>
+<pre><code>const conditionalComment = /^&lt;!\[/
+if (conditionalComment.test(html)) {
+    const conditionalEnd = html.indexOf(&apos;]&gt;&apos;)
+
+    if (conditionalEnd &gt;= 0) {
+        advance(conditionalEnd + 2)
+        continue
+    }
+}
+</code></pre><p>&#x5230;&#x8FD9;&#x91CC;&#x6CE8;&#x91CA;&#x5C31;&#x89E3;&#x6790;&#x5B8C;&#x4E86;</p>
+<h3 id="doctype&#x8282;&#x70B9;&#x89E3;&#x6790;">Doctype&#x8282;&#x70B9;&#x89E3;&#x6790;</h3>
+<p>Doctype&#x6CA1;&#x5565;&#x597D;&#x8BB2;&#x7684;&#xFF0C;&#x89E3;&#x6790;&#x5230;&#x5C31;&#x5220;&#x6389;&#x7136;&#x540E;&#x4E0B;&#x4E00;&#x6B65;</p>
+<pre><code>const doctype = /^&lt;!DOCTYPE [^&gt;]+&gt;/i
+const doctypeMatch = html.match(doctype)
+if (doctypeMatch) {
+    advance(doctypeMatch[0].length)
+    continue
+}
+</code></pre><p>/^&lt;!DOCTYPE [^&gt;]+&gt;/i &#x5339;&#x914D;&#x4EE5;&lt;!DOCTYPE&#x5F00;&#x5934;&#xFF0C;&#x5E76;&#x4E14;DOCTYPE &#x4E4B;&#x540E;&#x5339;&#x914D;&#x975E;&gt;&#x7684;&#x4EFB;&#x610F;1&#x4E2A;&#x4EE5;&#x4E0A;&#x5B57;&#x7B26;&#xFF0C;&#x5FFD;&#x7565;&#x5927;&#x5C0F;&#x5199;<br>&#x6BD4;&#x5982;&lt;!DOCTYPE a&gt;&#xFF0C;&lt;!doctype z&gt;&#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x7684;</p>
+<h3 id="&#x7ED3;&#x675F;&#x6807;&#x7B7E;">&#x7ED3;&#x675F;&#x6807;&#x7B7E;</h3>
+<pre><code>const unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/
+const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z${unicodeRegExp.source}]*`
+const qnameCapture = `((?:${ncname}\\:)?${ncname})`
+const endTag = new RegExp(`^&lt;\\/${qnameCapture}[^&gt;]*&gt;`)
+const endTagMatch = html.match(endTag)
+if (endTagMatch) {
+    const curIndex = index
+    advance(endTagMatch[0].length)
+    parseEndTag(endTagMatch[1], curIndex, index)
+    continue
+}
+</code></pre><p>endTag&#x7684;&#x6B63;&#x5219;&#x662F;&#x76F8;&#x5BF9;&#x590D;&#x6742;&#x7684;&#xFF0C;&#x6709;&#x5174;&#x8DA3;&#x53EF;&#x4EE5;&#x7814;&#x7A76;&#x4E0B;&#xFF0C;&#x8FD9;&#x91CC;&#x5148;&#x7565;&#x8FC7;<br>&#x53EF;&#x4EE5;&#x770B;&#x5230;endTag&#x7684;&#x89E3;&#x6790;&#x4E0D;&#x540C;&#x4E4B;&#x540E;&#x5728;&#x4E8E;&#x591A;&#x4E86;&#x4E2A;parseEndTag&#xFF0C;parseEndTag&#x662F;&#x5E72;&#x561B;&#x7684;&#x5462;&#xFF1F;   </p>
+<p>&#x5148;&#x601D;&#x8003;&#x4E0B;&#xFF1A;&#x7ED3;&#x675F;&#x6807;&#x7B7E;&#x6709;&#x54EA;&#x51E0;&#x79CD;&#xFF1F;</p>
+<ol>
+<li>&#x95ED;&#x5408;&#x6807;&#x7B7E;&#xFF1A;&#x666E;&#x901A;&#x6807;&#x7B7E;</li>
+<li>&#x81EA;&#x95ED;&#x5408;&#x6807;&#x7B7E;&#xFF1A;br   </li>
+</ol>
+<p>&#x26A0;&#xFE0F; &#xFF1A;&#x4EFB;&#x610F;&#x6807;&#x7B7E;&#x90FD;&#x662F;&#x95ED;&#x5408;&#x6807;&#x7B7E;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x89E3;&#x6790;&#x5230;&#x7ED3;&#x675F;&#x6807;&#x7B7E;&#x65F6;&#x9700;&#x8981;&#x67E5;&#x627E;&#x5230;&#x5F00;&#x59CB;&#x6807;&#x7B7E;</p>
+<pre><code>function parseEndTag (tagName, start, end) {
+    let pos, lowerCasedTagName
+    if (tagName) {
+        lowerCasedTagName = tagName.lowerCase()
+        for (pos = stack.length - 1; pos &gt;= 0; pos--) {
+            if (stack[pos].lowerCasedTag === lowerCasedTagName) {
+                break
+            }
+        }
+    }
+    if (pos &gt;= 0) {
+        for (let i = stack.length - 1; i &gt;= pos; i--) {
+            if (options.end) {
+                options.end(stack[i].tag, start, end)
+            }
+        }
+        stack.length = pos
+        lastTag = pos &amp;&amp; stackp[pos - 1].tag
+    }
+}
+</code></pre><p>&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x662F;&#xFF1A;</p>
+<ul>
+<li>stack&#x5B58;&#x50A8;&#x4E86;&#x5F53;&#x524D;&#x672A;&#x95ED;&#x5408;&#x7684;&#x8282;&#x70B9;</li>
+<li>&#x627E;&#x5230;&#x5F53;&#x524D;&#x95ED;&#x5408;&#x8282;&#x70B9;&#x7684;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x5728;stack&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;</li>
+<li>&#x627E;&#x5230;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x548C;&#x5173;&#x95ED;&#x8282;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x672A;&#x5173;&#x95ED;&#x8282;&#x70B9;&#xFF0C;&#x8FD9;&#x4E9B;&#x8282;&#x70B9;&#x90FD;&#x7ED9;&#x5173;&#x95ED;&#x6389;</li>
+<li>stack&#x6E05;&#x7406;&#x4E00;&#x4E0B;   </li>
+</ul>
+<h3 id="&#x5F00;&#x59CB;&#x6807;&#x7B7E;">&#x5F00;&#x59CB;&#x6807;&#x7B7E;</h3>
+<pre><code>const startTagMatch = parseStartTag()
+if (startTagMatch) {
+    handleStartTag(startTagMatch)
+    if (shouldIgnoreFirstNewline(startTagMatch.tagName, html)) {
+        advance(1)
+    }
+    continue
+}
+</code></pre><p>parseStartTag&#x65B9;&#x6CD5;&#x662F;&#x89E3;&#x6790;&#x5F00;&#x59CB;&#x6807;&#x7B7E;&#x7684;&#xFF0C;&#x4F1A;&#x89E3;&#x6790;&#x51FA;&#x6807;&#x7B7E;&#x540D;&#x4EE5;&#x53CA;&#x5C5E;&#x6027;   </p>
+<blockquote>
+<p>&#x5177;&#x4F53;&#x53EF;&#x4EE5;&#x770B;src/compiler/parser/html-parser.js&#x4E2D;parseStartTag   </p>
+</blockquote>
+<p>&#x89E3;&#x6790;&#x5F00;&#x59CB;&#x6807;&#x7B7E;&#x7684;&#x6B63;&#x5219;&#x548C;&#x7ED3;&#x675F;&#x6807;&#x7B7E;&#x7C7B;&#x4F3C;   </p>
+<pre><code>const unicodeRegExp = /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/
+const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z${unicodeRegExp.source}]*`
+const qnameCapture = `((?:${ncname}\\:)?${ncname})`
+const startTagOpen = new RegExp(`^&lt;${qnameCapture}`)
+&lt;!-- &#x5339;&#x914D;&#x5F00;&#x59CB;&#x6807;&#x7B7E; --&gt;
+html.match(startTagOpen)
+</code></pre><p>&#x5982;&#x4F55;&#x67E5;&#x627E;&#x5F00;&#x59CB;&#x6807;&#x7B7E;&#x7ED3;&#x675F;&#x5462;&#xFF1F;</p>
+<pre><code>const startTagClose = /^\s*(\/?)&gt;/
+&lt;!-- &#x5339;&#x914D;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x4E4B;&#x540E;&#xFF0C;&#x5C31;advance&#x53BB;&#x6389;html&#xFF0C;&#x7136;&#x540E;&#x67E5;&#x627E;&#x4E0B;&#x4E00;&#x4E2A;&gt;&#xFF0C;&#x5373;&#x4E3A;&#x7ED3;&#x675F; --&gt;
+html.match(startTagClose)
+</code></pre><p>&#x5339;&#x914D;&#x5F00;&#x59CB;&#x8282;&#x70B9;&#x4E2D;&#x7684;&#x5C5E;&#x6027;</p>
+<pre><code>const attribute = /^\s*([^\s&quot;&apos;&lt;&gt;\/=]+)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|&apos;([^&apos;]*)&apos;+|([^\s&quot;&apos;=&lt;&gt;`]+)))?/
+const dynamicArgAttribute = /^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s&quot;&apos;&lt;&gt;\/=]*)(?:\s*(=)\s*(?:&quot;([^&quot;]*)&quot;+|&apos;([^&apos;]*)&apos;+|([^\s&quot;&apos;=&lt;&gt;`]+)))?/
+attr = html.match(dynamicArgAttribute) || html.match(attribute)
+</code></pre><p>&#x26A0;&#xFE0F; &#x6CE8;&#x610F;&#xFF1A; &#x5339;&#x914D;&#x5230;&#x4E00;&#x4E2A;&#x5C5E;&#x6027;&#x4E4B;&#x540E;&#xFF0C;&#x9664;&#x4E86;&#x628A;&#x5C5E;&#x6027;&#x5B58;&#x5230;match&#x91CC;&#x9762;&#xFF0C;&#x8FD8;&#x9700;&#x8981;advance</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="GATEWAY.html" class="navigation navigation-prev " aria-label="Previous page: 1.1 编译入口">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="OPTIMISE.html" class="navigation navigation-next " aria-label="Next page: 1.3 AST优化">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"1.2 模版解析","level":"1.2.2","depth":2,"next":{"title":"1.3 AST优化","level":"1.2.3","depth":2,"path":"compiler/OPTIMISE.md","ref":"compiler/OPTIMISE.md","articles":[]},"previous":{"title":"1.1 编译入口","level":"1.2.1","depth":2,"path":"compiler/GATEWAY.md","ref":"compiler/GATEWAY.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"compiler/PARSE.md","mtime":"2020-06-24T08:26:51.262Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-07-06T06:07:35.226Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
