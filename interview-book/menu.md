@@ -73,6 +73,7 @@
     - [渲染性能](knowledge/browser/1/1.md)
     - [cookie](knowledge/browser/2/1.md)
     - [DOMContentLoaded全面解析](knowledge/browser/3/1.md)
+    - [web通信](knowledge/browser/4/1.md)
   - [Deno](knowledge/deno/README.md)
     - [deno如何实现文件上传](knowledge/deno/1/1.md)
     - [deno如何解决跨域以及跨域共享cookie](knowledge/deno/2/1.md)
