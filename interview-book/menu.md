@@ -33,6 +33,7 @@
       - [项目中如何共用ESM和CommonJS](knowledge/js/7/4/1.md)
       - [UMD是如何实现的](knowledge/js/7/5/1.md)
     - [Proxy代理](knowledge/js/8/1.md)
+    - [Performance全面解析](knowledge/js/9/1.md)
   - [Promise](knowledge/promise/README.md)
     - [Promise.all有一个请求出错了如何回滚？](knowledge/promise/1.md)
   - [Vue](knowledge/vue/README.md)
