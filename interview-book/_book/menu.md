@@ -10,6 +10,7 @@
     - [自定义指令实现图片懒加载](interview/vue/3/1.md)
   - [js](interview/js/README.md)
     - [写一个深拷贝，考虑 正则，Date这种类型的数据](interview/js/1/1.md)
+    - [有1000个dom，需要更新其中的100个，如何操作才能减少dom的操作？](interview/js/2/1.md)
 - [知识星球](knowledge/README.md)
   - [Html](knowledge/html/README.md)
     - [Html布局元素的分类有哪些](knowledge/html/1/1.md)
