@@ -6,3 +6,5 @@
     - [webpack动态导入 import 是如何实现的](interview/webpack/4/1.md)
     - [开发一个loader，把代码中的箭头函数编译为普通函数](interview/webpack/5/1.md)
     - [tapable 的使用和原理](interview/webpack/6/1.md)
+    - [style-loader 的使用及原理](interview/webpack/7/1.md)
+    - [如何获取loader的配置参数](interview/webpack/8/1.md)
