@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>webpack做过哪些优化？开发效率，打包策略等 · GitBook</title>
+        <title>React Ref的使用 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../2/1.html" />
+    <link rel="next" href="../6/1.html" />
     
     
-    <link rel="prev" href="../" />
+    <link rel="prev" href="../4/1.html" />
     
 
     </head>
@@ -145,7 +145,7 @@
                 <a href="../">
             
                     
-                    webpack
+                    react
             
                 </a>
             
@@ -154,12 +154,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1.1" data-path="1.html">
+        <li class="chapter " data-level="1.2.1.1" data-path="../1/1.html">
             
-                <a href="1.html">
+                <a href="../1/1.html">
             
                     
-                    webpack做过哪些优化？开发效率，打包策略等
+                    React Context的理解
             
                 </a>
             
@@ -172,7 +172,7 @@
                 <a href="../2/1.html">
             
                     
-                    HtmlWebpackPlugin 的配置
+                    React fiber是什么？怎么用
             
                 </a>
             
@@ -185,7 +185,7 @@
                 <a href="../3/1.html">
             
                     
-                    有哪些有用的 webpack 插件
+                    antd4 rc-field-form如何实现的
             
                 </a>
             
@@ -198,7 +198,7 @@
                 <a href="../4/1.html">
             
                     
-                    webpack动态导入 import 是如何实现的
+                    从createElement，render，Functional Component, Class Component角度开发一个React
             
                 </a>
             
@@ -206,12 +206,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.1.5" data-path="../5/1.html">
+        <li class="chapter active" data-level="1.2.1.5" data-path="1.html">
             
-                <a href="../5/1.html">
+                <a href="1.html">
             
                     
-                    开发一个loader，把代码中的箭头函数编译为普通函数
+                    React Ref的使用
             
                 </a>
             
@@ -224,7 +224,7 @@
                 <a href="../6/1.html">
             
                     
-                    tapable 的使用和原理
+                    有哪些生命周期
             
                 </a>
             
@@ -237,20 +237,7 @@
                 <a href="../7/1.html">
             
                     
-                    style-loader 的使用及原理
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.1.8" data-path="../8/1.html">
-            
-                <a href="../8/1.html">
-            
-                    
-                    如何获取loader的配置参数
+                    如何开发一个 redux
             
                 </a>
             
@@ -298,7 +285,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >webpack做过哪些优化？开发效率，打包策略等</a>
+        <a href="../../.." >React Ref的使用</a>
     </h1>
 </div>
 
@@ -315,8 +302,35 @@
                                 
                                 <p><img src="1.jpeg" alt=""></p>
 <h3 id="&#x89E3;&#x7B54;">&#x89E3;&#x7B54;</h3>
-<footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-11-10 16:58:14
+<p>&#x6700;&#x65B0;&#x7248;&#x672C; ref &#x4F7F;&#x7528;</p>
+<pre><code>this.inputRef = React.createRef()
+
+&lt;input ref={this.inputRef} /&gt;
+</code></pre><h4 id="ref-&#x5F15;&#x7528;&#x503C;">ref &#x5F15;&#x7528;&#x503C;</h4>
+<ol>
+<li>&#x5982;&#x4F55; ref={this.inputRef} &#x52A0;&#x8F7D;&#x666E;&#x901A;&#x5143;&#x7D20;&#x4E0A;&#xFF0C;&#x90A3;&#x4E48; ref &#x662F; dom &#x8282;&#x70B9;</li>
+<li>&#x5982;&#x679C;&#x5B83;&#x52A0;&#x5728;&#x5B50;&#x7EC4;&#x4EF6;&#x4E0A;&#xFF0C;ref &#x662F;&#x5B50;&#x7EC4;&#x4EF6;&#x5B9E;&#x4F8B;</li>
+</ol>
+<h4 id="createref-&#x5B9E;&#x73B0;">createRef &#x5B9E;&#x73B0;</h4>
+<pre><code>function createRef () {
+    return { current: null }
+}
+</code></pre><h4 id="&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x5982;&#x4F55;&#x4F7F;&#x7528;-ref">&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x5982;&#x4F55;&#x4F7F;&#x7528; Ref</h4>
+<pre><code>const FunctionalComponent = React.forwardRef((props, ref) =&gt; {
+    return &lt;button ref={ref}&gt;{props.label}&lt;/button&gt;
+})
+
+this.btnRef = React.createRef();
+&lt;FunctionalComponent ref={this.btnRef}&gt;
+</code></pre><h4 id="forwardref-&#x81EA;&#x5B9A;&#x4E49;&#x5B9E;&#x73B0;">forwardRef &#x81EA;&#x5B9A;&#x4E49;&#x5B9E;&#x73B0;</h4>
+<pre><code>function forwardRef (FuncComponent) {
+    return (props) =&gt; {
+        const ref = props.ref
+        return FuncComponent(props, ref);
+    }
+}
+</code></pre><footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2020-11-30 11:47:48
 </span></footer>
                                 
                                 </section>
@@ -344,12 +358,12 @@
 
             
                 
-                <a href="../" class="navigation navigation-prev " aria-label="Previous page: webpack">
+                <a href="../4/1.html" class="navigation navigation-prev " aria-label="Previous page: 从createElement，render，Functional Component, Class Component角度开发一个React">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../2/1.html" class="navigation navigation-next " aria-label="Next page: HtmlWebpackPlugin 的配置">
+                <a href="../6/1.html" class="navigation navigation-next " aria-label="Next page: 有哪些生命周期">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -360,7 +374,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"webpack做过哪些优化？开发效率，打包策略等","level":"1.2.1.1","depth":3,"next":{"title":"HtmlWebpackPlugin 的配置","level":"1.2.1.2","depth":3,"path":"interview/webpack/2/1.md","ref":"interview/webpack/2/1.md","articles":[]},"previous":{"title":"webpack","level":"1.2.1","depth":2,"path":"interview/webpack/README.md","ref":"interview/webpack/README.md","articles":[{"title":"webpack做过哪些优化？开发效率，打包策略等","level":"1.2.1.1","depth":3,"path":"interview/webpack/1/1.md","ref":"interview/webpack/1/1.md","articles":[]},{"title":"HtmlWebpackPlugin 的配置","level":"1.2.1.2","depth":3,"path":"interview/webpack/2/1.md","ref":"interview/webpack/2/1.md","articles":[]},{"title":"有哪些有用的 webpack 插件","level":"1.2.1.3","depth":3,"path":"interview/webpack/3/1.md","ref":"interview/webpack/3/1.md","articles":[]},{"title":"webpack动态导入 import 是如何实现的","level":"1.2.1.4","depth":3,"path":"interview/webpack/4/1.md","ref":"interview/webpack/4/1.md","articles":[]},{"title":"开发一个loader，把代码中的箭头函数编译为普通函数","level":"1.2.1.5","depth":3,"path":"interview/webpack/5/1.md","ref":"interview/webpack/5/1.md","articles":[]},{"title":"tapable 的使用和原理","level":"1.2.1.6","depth":3,"path":"interview/webpack/6/1.md","ref":"interview/webpack/6/1.md","articles":[]},{"title":"style-loader 的使用及原理","level":"1.2.1.7","depth":3,"path":"interview/webpack/7/1.md","ref":"interview/webpack/7/1.md","articles":[]},{"title":"如何获取loader的配置参数","level":"1.2.1.8","depth":3,"path":"interview/webpack/8/1.md","ref":"interview/webpack/8/1.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/webpack/1/1.md","mtime":"2020-11-10T08:58:14.609Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-17T10:28:05.133Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"React Ref的使用","level":"1.2.1.5","depth":3,"next":{"title":"有哪些生命周期","level":"1.2.1.6","depth":3,"path":"interview/react/6/1.md","ref":"interview/react/6/1.md","articles":[]},"previous":{"title":"从createElement，render，Functional Component, Class Component角度开发一个React","level":"1.2.1.4","depth":3,"path":"interview/react/4/1.md","ref":"interview/react/4/1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/react/5/1.md","mtime":"2020-11-30T03:47:48.276Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-30T03:03:13.976Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1,0 +1,632 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>antd4 rc-field-form如何实现的 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-chapter-fold/chapter-fold.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../4/1.html" />
+    
+    
+    <link rel="prev" href="../2/1.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../../knowledge/">
+            
+                <a href="../../../knowledge/">
+            
+                    
+                    知识星球
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    react
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1.1" data-path="../1/1.html">
+            
+                <a href="../1/1.html">
+            
+                    
+                    React Context的理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.2" data-path="../2/1.html">
+            
+                <a href="../2/1.html">
+            
+                    
+                    React fiber是什么？怎么用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.1.3" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    antd4 rc-field-form如何实现的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.4" data-path="../4/1.html">
+            
+                <a href="../4/1.html">
+            
+                    
+                    从createElement，render，Functional Component, Class Component角度开发一个React
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.5" data-path="../5/1.html">
+            
+                <a href="../5/1.html">
+            
+                    
+                    React Ref的使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.6" data-path="../6/1.html">
+            
+                <a href="../6/1.html">
+            
+                    
+                    有哪些生命周期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.1.7" data-path="../7/1.html">
+            
+                <a href="../7/1.html">
+            
+                    
+                    如何开发一个 redux
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >antd4 rc-field-form如何实现的</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><img src="1.jpeg" alt=""></p>
+<h3 id="&#x5B66;&#x4E60;-rc-field-form-&#x7684;&#x51E0;&#x4E2A;&#x77E5;&#x8BC6;&#x70B9;">&#x5B66;&#x4E60; rc-field-form &#x7684;&#x51E0;&#x4E2A;&#x77E5;&#x8BC6;&#x70B9;</h3>
+<ol>
+<li>&#x5B9E;&#x73B0;Form&#x7EC4;&#x4EF6;&#x7684;&#x6570;&#x636E;&#x4E0A;&#x4E0B;&#x6587;&#x9AD8;&#x9636;&#x7EC4;&#x4EF6;</li>
+<li>&#x5B9E;&#x73B0;Form&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x6258;&#x7BA1;</li>
+<li>&#x5B9E;&#x73B0;Form&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</li>
+<li>&#x5B9E;&#x73B0;Form&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;&#x5F3A;&#x5236;&#x66F4;&#x65B0;</li>
+<li>&#x5B9E;&#x73B0;Form&#x7EC4;&#x4EF6;&#x4E2D;&#x7684;&#x5F02;&#x6B65;&#x8868;&#x5355;&#x6821;&#x9A8C;</li>
+</ol>
+<h3 id="rc-field-form-&#x7684;&#x4F7F;&#x7528;">rc-field-form &#x7684;&#x4F7F;&#x7528;</h3>
+<pre><code>import Form, { Field } from &apos;rc-field-form&apos;
+
+const validateUniqueName = (name, value) =&gt; {
+    return new Promise(resolve =&gt; {
+        setTimeout(() =&gt; {
+            resolve(value === &apos;xiur&apos; ? `${name} is not unique` : &apos;&apos;)
+        }, 3000)
+    })
+}
+
+&lt;Form
+    initialValues={{ username: &apos;xiur&apos;, password: &apos;1234&apos; }}
+    onFinish={(values) =&gt; {
+        console.log(&apos;&#x6210;&#x529F;&#xFF1A;&apos;, values)
+    }}
+    onFinishFailed={(error) =&gt; {
+        console.log(&apos;&#x5931;&#x8D25;&#xFF1A;&apos;, error)
+    }}
+&gt;
+    &lt;Form name=&apos;username&apos; rules={[{ required: true }, { min: 3 }, { max: 6 }, { validate: validateUniqueName }]}&gt;
+        &lt;input placeholder=&apos;&#x8BF7;&#x8F93;&#x5165;&#x7528;&#x6237;&#x540D;&apos; /&gt;
+    &lt;/Form&gt;
+    &lt;Form name=&apos;password&apos; rules=[{ required: true }]&gt;
+        &lt;input placeholder=&apos;&#x8BF7;&#x8F93;&#x5165;&#x5BC6;&#x7801;&apos; /&gt;
+    &lt;/Form&gt;
+&lt;/Form&gt;
+</code></pre><h3 id="&#x5B9E;&#x73B0;&#x903B;&#x8F91;">&#x5B9E;&#x73B0;&#x903B;&#x8F91;</h3>
+<h4 id="form-&#x7EC4;&#x4EF6;">Form &#x7EC4;&#x4EF6;</h4>
+<ol>
+<li>&#x5B9E;&#x4F8B;&#x5316; formInstance</li>
+<li>&#x521D;&#x59CB;&#x5316; store</li>
+<li>&#x8BBE;&#x7F6E; callbacks</li>
+<li>&#x4F7F;&#x7528; context   </li>
+</ol>
+<h4 id="field-&#x7EC4;&#x4EF6;">Field &#x7EC4;&#x4EF6;</h4>
+<ol>
+<li>&#x83B7;&#x53D6; context</li>
+<li>&#x514B;&#x9686; children &#x91CD;&#x5199; props</li>
+<li>&#x6CE8;&#x518C; Field</li>
+<li>&#x58F0;&#x660E; onStateChange&#xFF0C;store &#x6539;&#x53D8; forceUpdate   </li>
+</ol>
+<h4 id="useform">useForm</h4>
+<ol>
+<li>useForm &#x8FD4;&#x56DE; formInstance</li>
+<li>FormStore &#x6570;&#x636E;&#x6258;&#x7BA1;   </li>
+</ol>
+<h4 id="async-validate">async-validate</h4>
+<ol>
+<li>&#x6570;&#x636E;&#x6821;&#x9A8C;</li>
+</ol>
+<h3 id="form-&#x5B9E;&#x73B0;">Form &#x5B9E;&#x73B0;</h3>
+<p><strong>&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x521D;&#x59CB;&#x503C;&#x53EA;&#x8BBE;&#x7F6E;&#x4E00;&#x6B21;&#xFF1F;</strong><br>&#x573A;&#x666F;&#xFF1A;&#x6BD4;&#x5982;&#x5916;&#x90E8;&#x7684;&#x7236;&#x7EC4;&#x4EF6;&#x66F4;&#x65B0;&#xFF0C;&#x4F1A;&#x9020;&#x6210; Form &#x7EC4;&#x4EF6;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x6B64;&#x65F6;&#x4F1A;&#x91CD;&#x65B0;&#x8BBE;&#x7F6E; initialValue&#xFF0C;&#x53EF;&#x662F;&#x6B64;&#x65F6;&#x5DF2;&#x7ECF;&#x4E0D;&#x662F;&#x521D;&#x59CB;&#x5316;&#x4E86;<br><strong>&#x4F7F;&#x7528; React.useRef &#x5355;&#x4F8B;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;</strong></p>
+<pre><code>const FieldContext = React.createContext()
+const Form = ({ initialValues, onFinish, onFinishFailed, children }) =&gt; {
+    const [ formInstance ] = useForm()
+    const mountRef = React.useRef(null)
+    if(!mountRef.current) {
+        formInstance.setInitialValues(initialValues)
+        formInstance.setCallbacks({ onFinish, onFinishFailed })
+        mountRef.current = true
+    }
+    return &lt;form&gt;
+        &lt;FieldContext.Provider value={formInstance}&gt;
+            {children}
+        &lt;/FieldContext.Provider&gt;
+    &lt;/form&gt;
+}
+</code></pre><h3 id="useform-&#x5B9E;&#x73B0;">useForm &#x5B9E;&#x73B0;</h3>
+<pre><code>class FormStore {
+    constructor (forceRootUpdate) {
+        this.forceRootUpdate = forceRootUpdate
+        this.store = {}
+        this.callbacks = {}
+        this.fieldEntities = []
+    }
+    setCallbacks = callbacks =&gt; {
+        this.callbacks = {...callbacks}
+    }
+    setInitialValues = store =&gt; {
+        this.store = {...store}
+    }
+    setFieldValue = (name, value) =&gt; {
+        this.store[name] = value
+        this.notify()
+    }
+    getFieldValue = name =&gt; {
+        return this.store[name]
+    }
+    registerField = (fieldEntity) =&gt; {
+        this.fieldEntities.push(fieldEntity)
+    }
+    notify = () =&gt; {
+        for (let fieldEntity of this.fieldEntities) {
+            fieldEntity.onStateChange()
+        }
+    }
+    submit = () =&gt; {
+        const descriptor = {}
+        this.fieldEntities.forEach(fieldEntity =&gt; {
+            const { name, rules } = fieldEntity.props
+            if (rules) {
+                const ruleInfo = {}
+                rules.forEach(rule =&gt; {
+                    const ruleKeys = Object.keys(rule)
+                    ruleKeys.forEach(ruleKey =&gt; {
+                        ruleInfo[ruleKey] = rule[ruleKey]
+                    })
+                })
+                descriptor[name] = ruleInfo
+            }
+        })
+
+        new Schema(descriptor).validate(this.store)
+        .then(values =&gt; {
+            this.callbacks.onFinish(values)
+        })
+        .catch(error =&gt; {
+            this.callbacks.onFinishFailed(error)
+        })
+    }
+    getForm = () =&gt; {
+        return {
+            setInitialValues: this.setInitialValues,
+            setCallbacks: this.setCallbacks,
+            setFieldValue: this.setFieldValue,
+            getFieldValue: this.getFieldValue,
+            registerField: this.registerField,
+            submit: this.submit,
+        }
+    }
+}
+
+function useForm () {
+    const formRef = React.useRef(null)
+    const [, forceUpdate] = React.useState()
+    if (!formRef.current) {
+        const formStore = new FormStore(forceUpdate)
+        const formInstance = formStore.getForm()
+        formRef.current = formInstance
+    }
+    return [formRef.current]
+}
+</code></pre><h4 id="async-validate-&#x5B9E;&#x73B0;">async-validate &#x5B9E;&#x73B0;</h4>
+<pre><code>class Schema {
+    constructor (descriptor) {
+        this.descriptor = descriptor
+    }
+    validate () {
+        return new Promise(async (resolve, reject) =&gt; {
+            let errorInfo = []
+            const fieldNames = Object.keys(this.descriptor)
+            for (let i = 0; i &lt; fieldNames.length; i++) {
+                const fieldName = fieldNames[i]
+                let errors = []
+                const filedRules = this.descriptor[fieldName]
+                const fieldRuleNames = Object.keys(filedRules)
+                for (let i = 0; i &lt; fieldRuleNames.length; i++){
+                    const fieldRuleName = fieldRuleNames[i]
+                    switch (fieldRuleName) {
+                        case &apos;required&apos;:
+                            if (!values[fieldName]) {
+                                errors.push(`${fieldName} is required`)
+                            }
+                            break
+                        case &apos;min&apos;:
+                            if (values[fieldName].length &lt; filedRules[fieldRuleName]) {
+                                errors.push(`${fieldName} &#x6700;&#x5C0F;&#x4E3A;${filedRules[fieldRuleName]}&#x4F4D;&#x5B57;&#x7B26;`)
+                            }
+                            break
+                        case &apos;max&apos;:
+                            if (values[fieldName].length &gt; filedRules[fieldRuleName]) {
+                                errors.push(`${fieldName} &#x6700;&#x5927;&#x4E3A;${filedRules[fieldRuleName]}&#x4F4D;&#x5B57;&#x7B26;`)
+                            }
+                            break
+                        case &apos;validate&apos;:
+                            const validateFn = filedRules[fieldRuleName]
+                            const result = await validateFn(fieldName, values[fieldName])
+                            if (result.length &gt; 0) {
+                                errors.push(result)
+                            }
+                    }
+                }
+                errors.length &gt; 0 ? errorInfo.push({ name: fieldName, errors }) : void(0)
+            }
+            errorInfo.length &gt; 0 ? reject({ errorInfo, values }) : resolve(values)
+        })
+    }
+}
+</code></pre><h3 id="field-&#x5B9E;&#x73B0;">Field &#x5B9E;&#x73B0;</h3>
+<p>&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x5B9E;&#x73B0; &#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A; &#x548C; &#x5F3A;&#x5236;&#x5237;&#x65B0;</p>
+<ol>
+<li>input &#x7684; value &#x7684;&#x83B7;&#x53D6; &#x4ECE; this.context &#x901A;&#x8FC7; getFiledValue &#x83B7;&#x53D6;</li>
+<li>&#x5F53; onChange &#x89E6;&#x53D1;&#x901A;&#x8FC7; setFieldValue &#x6539;&#x53D8; store &#x65F6;&#xFF0C;&#x9700;&#x8981;&#x66F4;&#x65B0;UI&#xFF0C;&#x5C31;&#x901A;&#x8FC7; store &#x7684; notify &#x8C03;&#x7528;&#x5404;&#x4E2A; Field &#x7684; onStateChange &#x5B9E;&#x73B0;</li>
+</ol>
+<pre><code>class Field extends React.Component {
+    static contextType = FieldContext
+    componentDidMount () {
+        const formInstance = this.context
+        formInstance.registerField(this)
+    }
+    onStateChange = () =&gt; {
+        this.forceUpdate
+    }
+    getControlled = () =&gt; {
+        const formInstance = this.context
+        const { name, children } = this.props
+        return React.cloneElement(children, {
+            ...children.props,
+            value: formInstance.getFieldValue(name),
+            onChange: (e) =&gt; {
+                formInstance.setFieldValue(name, e.target.value)
+            }
+        })
+    }
+    render () {
+        return this.getControlled()
+    }
+}
+</code></pre><footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2020-11-04 15:16:15
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../2/1.html" class="navigation navigation-prev " aria-label="Previous page: React fiber是什么？怎么用">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../4/1.html" class="navigation navigation-next " aria-label="Next page: 从createElement，render，Functional Component, Class Component角度开发一个React">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"antd4 rc-field-form如何实现的","level":"1.2.1.3","depth":3,"next":{"title":"从createElement，render，Functional Component, Class Component角度开发一个React","level":"1.2.1.4","depth":3,"path":"interview/react/4/1.md","ref":"interview/react/4/1.md","articles":[]},"previous":{"title":"React fiber是什么？怎么用","level":"1.2.1.2","depth":3,"path":"interview/react/2/1.md","ref":"interview/react/2/1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/react/3/1.md","mtime":"2020-11-04T07:16:15.688Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-30T03:03:13.976Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-chapter-fold/chapter-fold.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

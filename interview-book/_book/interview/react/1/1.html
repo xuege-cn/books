@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>webpack动态导入 import 是如何实现的 · GitBook</title>
+        <title>React Context的理解 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../5/1.html" />
+    <link rel="next" href="../2/1.html" />
     
     
-    <link rel="prev" href="../3/1.html" />
+    <link rel="prev" href="../" />
     
 
     </head>
@@ -145,7 +145,7 @@
                 <a href="../">
             
                     
-                    webpack
+                    react
             
                 </a>
             
@@ -154,12 +154,12 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1.1" data-path="../1/1.html">
+        <li class="chapter active" data-level="1.2.1.1" data-path="1.html">
             
-                <a href="../1/1.html">
+                <a href="1.html">
             
                     
-                    webpack做过哪些优化？开发效率，打包策略等
+                    React Context的理解
             
                 </a>
             
@@ -172,7 +172,7 @@
                 <a href="../2/1.html">
             
                     
-                    HtmlWebpackPlugin 的配置
+                    React fiber是什么？怎么用
             
                 </a>
             
@@ -185,7 +185,7 @@
                 <a href="../3/1.html">
             
                     
-                    有哪些有用的 webpack 插件
+                    antd4 rc-field-form如何实现的
             
                 </a>
             
@@ -193,12 +193,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.1.4" data-path="1.html">
+        <li class="chapter " data-level="1.2.1.4" data-path="../4/1.html">
             
-                <a href="1.html">
+                <a href="../4/1.html">
             
                     
-                    webpack动态导入 import 是如何实现的
+                    从createElement，render，Functional Component, Class Component角度开发一个React
             
                 </a>
             
@@ -211,7 +211,7 @@
                 <a href="../5/1.html">
             
                     
-                    开发一个loader，把代码中的箭头函数编译为普通函数
+                    React Ref的使用
             
                 </a>
             
@@ -224,7 +224,7 @@
                 <a href="../6/1.html">
             
                     
-                    tapable 的使用和原理
+                    有哪些生命周期
             
                 </a>
             
@@ -237,20 +237,7 @@
                 <a href="../7/1.html">
             
                     
-                    style-loader 的使用及原理
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.1.8" data-path="../8/1.html">
-            
-                <a href="../8/1.html">
-            
-                    
-                    如何获取loader的配置参数
+                    如何开发一个 redux
             
                 </a>
             
@@ -298,7 +285,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >webpack动态导入 import 是如何实现的</a>
+        <a href="../../.." >React Context的理解</a>
     </h1>
 </div>
 
@@ -315,129 +302,76 @@
                                 
                                 <p><img src="1.jpeg" alt=""></p>
 <h3 id="&#x89E3;&#x7B54;">&#x89E3;&#x7B54;</h3>
-<h4 id="&#x52A8;&#x6001;&#x5BFC;&#x5165;-import-&#x4F7F;&#x7528;">&#x52A8;&#x6001;&#x5BFC;&#x5165; import &#x4F7F;&#x7528;</h4>
-<pre><code>// index.js
-document.getElementById(&apos;app&apos;).addEventListener(&apos;click&apos;, () =&gt; {
-    import(&apos;./console.js&apos;).then(_console =&gt; {
-        _console.log(&apos;clicked&apos;)
-    })
-})
-
-//console.js
-function log (msg) {
-    console.log(`system log: ${msg}`)
-}
-export {
-    log
-}
-</code></pre><h4 id="webpack-&#x6253;&#x5305;&#x4E4B;&#x540E;&#x7684;&#x6837;&#x5B50;">webpack &#x6253;&#x5305;&#x4E4B;&#x540E;&#x7684;&#x6837;&#x5B50;</h4>
-<pre><code>// main.js
-{
-    &apos;./index.js&apos;: function (module, __webpack_exports__, __webpack_require__) {
-        document.getElementById(&apos;app&apos;).addEventListener(&apos;click&apos;, () =&gt; {
-            __webpack_require__.e(0).then(
-                __webpack_require__.bind(null, &apos;./console.js&apos;)
-            ).then(_console_ =&gt; {
-                _console_.log(&apos;clicked&apos;)
-            })
-        })
+<p>React Context &#x4E3B;&#x8981;&#x662F;&#x89E3;&#x51B3;&#x8DE8;&#x5C42;&#x7EA7;&#x7EC4;&#x4EF6;&#x6570;&#x636E;&#x4F20;&#x9012;&#xFF0C;&#x53EF;&#x4EE5;&#x5F53;&#x4F5C;&#x662F;&#x7279;&#x5B9A;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x6811;&#x5185;&#x5171;&#x4EAB;&#x7684;store</p>
+<h4 id="&#x8FC7;&#x65F6;&#x7684;context">&#x8FC7;&#x65F6;&#x7684;Context</h4>
+<pre><code>class Grand extends PureComponent {
+    static childContextTypes = {
+        text: PropTypes.string
     }
-}
-
-// 0.js
-window.webpackJsonp = window.webpackJsonp || []
-window.webpackJsonp.push([
-    [0],
-    {
-        &apos;./console.js&apos;: function (module, __webpack_exports__, __webpack_require__) {
-            Object.defineProperty(__webpack_exports__, &apos;log&apos;, {
-                enumerable: true,
-                get: function () {
-                    return log
-                }
-            })
-            function log (msg) {
-                console.log(msg)
-            }
+    getChildContext () {
+        return {
+        text: &apos;halo! old context&apos;
         }
     }
-])
-</code></pre><h4 id="webpackrequire-&#x7684;&#x5B9E;&#x73B0;"><strong>webpack_require</strong> &#x7684;&#x5B9E;&#x73B0;</h4>
-<pre><code>(function (modules) {
-    var installedModules = {};
-
-    function __webpack_require__ (moduleId) {
-        if (installedModules[moduleId]) {
-            return installedModules[moduleId]
-        }
-
-        var module = installedModules[moduleId] = {
-            i: moduleId,
-            l: false,
-            exports: {}
-        }
-
-        modules[moduleId].call(module, module, module.exports, __webpack_require__)
-        module.l = true
-
-        return module.exports
-    }
-})({
-    &apos;./index.js&apos;: function (){}
-})
-</code></pre><h4 id="webpackrequiree&#x7684;&#x5B9E;&#x73B0;"><strong>webpack_require</strong>.e&#x7684;&#x5B9E;&#x73B0;</h4>
-<pre><code>var installedChunks = {}
-__webpack_require__.e = function requireEnsuer (chunkId) {
-    var promises = []
-    var installedChunkData = installedChunks[chunkId]
-    if (installedChunkData !== 0) {
-        if (installedChunkData) {
-            promises.push(installedChunkData[2])
-        } else {
-            var promise = new Promise((resolve, reject) =&gt; {
-                installedChunkData = installedChunks[chunkId] = [resolve, reject]
-            })
-            promises.push((installedChunkdata[2] = promise))
-
-            var script = document.createElement(&apos;script&apos;)
-            script.src = `${chunkId}.js`
-            document.head.appendChild(script)
-        }
-    }
-    return Promise.all(promises)
 }
-</code></pre><h4 id="windowwebpackjsonp-&#x662F;&#x4EC0;&#x4E48;&#xFF1F;">window.webpackJsonp &#x662F;&#x4EC0;&#x4E48;&#xFF1F;</h4>
-<p>window.webpackJsonp &#x662F;&#x4E2A;&#x6570;&#x7EC4;&#xFF0C;&#x4F46;&#x662F;&#x4F20;&#x7EDF; jsonp &#x5E94;&#x8BE5;&#x662F;&#x8C03;&#x7528;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x662F;&#x6253;&#x5305;&#x4E4B;&#x540E;&#x4EE3;&#x7801;&#x4E3A;&#x4EC0;&#x4E48;&#x662F;&#xFF1A;window.webpackJsonp.push&#xFF0C;&#x5982;&#x4F55;&#x89E6;&#x53D1;&#x56DE;&#x8C03;&#x5462;&#xFF1F;</p>
-<pre><code>var jsonpArray = window.webpackJsonp = window.webpackJsonp || []
-var parentJsonpFunction = jsonpArray.push.bind(jsonArray)
-jsonpArray.push = webpackJsonpCallback
-for (let jsonp of jsonpArray) {
-    webpackJsonpCallback(jsonp)
-}
-</code></pre><p>&#x53EF;&#x4EE5;&#x770B;&#x51FA; window.webpackJsonp.push&#xFF0C;&#x5982;&#x679C;&#x5728;main.js&#x5DF2;&#x52A0;&#x8F7D;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5176;&#x5B9E;&#x5DF2;&#x7ECF;&#x662F; webpackJsonpCallback &#x51FD;&#x6570;&#x4E86;</p>
-<h4 id="webpackjsonpcallback-&#x7684;&#x5B9E;&#x73B0;">webpackJsonpCallback &#x7684;&#x5B9E;&#x73B0;</h4>
-<pre><code>function webpackJsonpCallback (data) {
-    const chunkIds = data[0]
-    const moreModules = data[1]
-    vat resolves = []
 
-    for (let chunkId of chunkIds) {
-        resolves.push(installedChunks[chunkId][0])
-        installedChunks[chunkId] = 0
+class Child extends React.Component {
+    static contextTypes = {
+        text: PropTypes.string
     }
-
-    for (let moduleName in moreModules) {
-        modules[moduleName] = moreModules[moduleName]
-    }
-
-    if (parentJsonpFunction) parentJsonpFunction(data)
-
-    while (resolves.length) {
-        resolves.shift()()
+    render () {
+        return &lt;div&gt;{this.context.text}&lt;/div&gt;
     }
 }
-</code></pre><footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-11-12 16:06:53
+</code></pre><h4 id="&#x65B0;context">&#x65B0;Context</h4>
+<pre><code>const TextContext = React.createContext();
+
+class Grand extends React.Component {
+    render () {
+        return &lt;TextContext.Provider value={{ text: &apos;halo! new context&apos; }}&gt;
+            &lt;Parent /&gt;
+        &lt;/TextContext.Provider&gt;
+    }
+}
+
+class Child extends React.Component {
+    static contextType = TextContext
+    render () {
+        return &lt;div&gt;{this.context.text}&lt;/div&gt;
+    }
+}
+</code></pre><h4 id="&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x5982;&#x4F55;&#x4F7F;&#x7528;-context">&#x51FD;&#x6570;&#x7EC4;&#x4EF6;&#x5982;&#x4F55;&#x4F7F;&#x7528; Context</h4>
+<pre><code>function Child () {
+    return &lt;TextContent&gt;
+        {
+            value =&gt; &lt;div&gt;{value}&lt;/div&gt;
+        }
+    &lt;/TextContent&gt;
+}
+</code></pre><h4 id="&#x5B9E;&#x73B0;&#x81EA;&#x5B9A;&#x4E49;&#x4E0A;&#x4E0B;&#x6587;">&#x5B9E;&#x73B0;&#x81EA;&#x5B9A;&#x4E49;&#x4E0A;&#x4E0B;&#x6587;</h4>
+<pre><code>function createContext () {
+    function Provider (props) {
+        Provider.value = props.value;
+        return props.children
+    }
+    function Consumer (props) {
+        return props.children(Provider.value);
+    }
+    return { Provider, Consumer }
+}
+
+class Child extends React.Component {
+    static contextType = TextContent;
+    constructor () {
+        this.context = Child.contextType.Provider.value
+    }
+}
+</code></pre><h4 id="&#x4F18;&#x7F3A;&#x70B9;">&#x4F18;&#x7F3A;&#x70B9;</h4>
+<p>&#x4F18;&#x70B9;&#xFF1A;&#x4E0D;&#x540C;&#x5C42;&#x7EA7;&#x7684;&#x7EC4;&#x4EF6;&#x9700;&#x8981;&#x8BBF;&#x95EE;&#x540C;&#x6837;&#x4E00;&#x4E9B;&#x6570;&#x636E;   </p>
+<p>&#x7F3A;&#x70B9;&#xFF1A;&#x7EC4;&#x4EF6;&#x7684;&#x590D;&#x7528;&#x6027;&#x53D8;&#x5DEE;   </p>
+<p>&#x7EC4;&#x4EF6;&#x590D;&#x7528;&#x662F;&#x4E00;&#x79CD;&#x66F4;&#x597D;&#x7684;&#x65B9;&#x5F0F; </p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2020-11-30 11:21:58
 </span></footer>
                                 
                                 </section>
@@ -465,12 +399,12 @@ for (let jsonp of jsonpArray) {
 
             
                 
-                <a href="../3/1.html" class="navigation navigation-prev " aria-label="Previous page: 有哪些有用的 webpack 插件">
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: react">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../5/1.html" class="navigation navigation-next " aria-label="Next page: 开发一个loader，把代码中的箭头函数编译为普通函数">
+                <a href="../2/1.html" class="navigation navigation-next " aria-label="Next page: React fiber是什么？怎么用">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -481,7 +415,7 @@ for (let jsonp of jsonpArray) {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"webpack动态导入 import 是如何实现的","level":"1.2.1.4","depth":3,"next":{"title":"开发一个loader，把代码中的箭头函数编译为普通函数","level":"1.2.1.5","depth":3,"path":"interview/webpack/5/1.md","ref":"interview/webpack/5/1.md","articles":[]},"previous":{"title":"有哪些有用的 webpack 插件","level":"1.2.1.3","depth":3,"path":"interview/webpack/3/1.md","ref":"interview/webpack/3/1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/webpack/4/1.md","mtime":"2020-11-12T08:06:53.871Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-17T10:28:05.133Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"React Context的理解","level":"1.2.1.1","depth":3,"next":{"title":"React fiber是什么？怎么用","level":"1.2.1.2","depth":3,"path":"interview/react/2/1.md","ref":"interview/react/2/1.md","articles":[]},"previous":{"title":"react","level":"1.2.1","depth":2,"path":"interview/react/README.md","ref":"interview/react/README.md","articles":[{"title":"React Context的理解","level":"1.2.1.1","depth":3,"path":"interview/react/1/1.md","ref":"interview/react/1/1.md","articles":[]},{"title":"React fiber是什么？怎么用","level":"1.2.1.2","depth":3,"path":"interview/react/2/1.md","ref":"interview/react/2/1.md","articles":[]},{"title":"antd4 rc-field-form如何实现的","level":"1.2.1.3","depth":3,"path":"interview/react/3/1.md","ref":"interview/react/3/1.md","articles":[]},{"title":"从createElement，render，Functional Component, Class Component角度开发一个React","level":"1.2.1.4","depth":3,"path":"interview/react/4/1.md","ref":"interview/react/4/1.md","articles":[]},{"title":"React Ref的使用","level":"1.2.1.5","depth":3,"path":"interview/react/5/1.md","ref":"interview/react/5/1.md","articles":[]},{"title":"有哪些生命周期","level":"1.2.1.6","depth":3,"path":"interview/react/6/1.md","ref":"interview/react/6/1.md","articles":[]},{"title":"如何开发一个 redux","level":"1.2.1.7","depth":3,"path":"interview/react/7/1.md","ref":"interview/react/7/1.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/react/1/1.md","mtime":"2020-11-30T03:21:58.165Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-30T03:03:13.976Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>

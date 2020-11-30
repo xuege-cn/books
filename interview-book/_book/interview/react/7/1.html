@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>HtmlWebpackPlugin 的配置 · GitBook</title>
+        <title>如何开发一个 redux · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,8 @@
     <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../3/1.html" />
     
-    
-    <link rel="prev" href="../1/1.html" />
+    <link rel="prev" href="../6/1.html" />
     
 
     </head>
@@ -145,7 +143,7 @@
                 <a href="../">
             
                     
-                    webpack
+                    react
             
                 </a>
             
@@ -159,7 +157,7 @@
                 <a href="../1/1.html">
             
                     
-                    webpack做过哪些优化？开发效率，打包策略等
+                    React Context的理解
             
                 </a>
             
@@ -167,12 +165,12 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2.1.2" data-path="1.html">
+        <li class="chapter " data-level="1.2.1.2" data-path="../2/1.html">
             
-                <a href="1.html">
+                <a href="../2/1.html">
             
                     
-                    HtmlWebpackPlugin 的配置
+                    React fiber是什么？怎么用
             
                 </a>
             
@@ -185,7 +183,7 @@
                 <a href="../3/1.html">
             
                     
-                    有哪些有用的 webpack 插件
+                    antd4 rc-field-form如何实现的
             
                 </a>
             
@@ -198,7 +196,7 @@
                 <a href="../4/1.html">
             
                     
-                    webpack动态导入 import 是如何实现的
+                    从createElement，render，Functional Component, Class Component角度开发一个React
             
                 </a>
             
@@ -211,7 +209,7 @@
                 <a href="../5/1.html">
             
                     
-                    开发一个loader，把代码中的箭头函数编译为普通函数
+                    React Ref的使用
             
                 </a>
             
@@ -224,7 +222,7 @@
                 <a href="../6/1.html">
             
                     
-                    tapable 的使用和原理
+                    有哪些生命周期
             
                 </a>
             
@@ -232,25 +230,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.1.7" data-path="../7/1.html">
+        <li class="chapter active" data-level="1.2.1.7" data-path="1.html">
             
-                <a href="../7/1.html">
-            
-                    
-                    style-loader 的使用及原理
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.1.8" data-path="../8/1.html">
-            
-                <a href="../8/1.html">
+                <a href="1.html">
             
                     
-                    如何获取loader的配置参数
+                    如何开发一个 redux
             
                 </a>
             
@@ -298,7 +283,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="../../.." >HtmlWebpackPlugin 的配置</a>
+        <a href="../../.." >如何开发一个 redux</a>
     </h1>
 </div>
 
@@ -314,60 +299,86 @@
                                 <section class="normal markdown-section">
                                 
                                 <p><img src="1.jpeg" alt=""></p>
-<h3 id="&#x89E3;&#x7B54;">&#x89E3;&#x7B54;</h3>
-<h4 id="filename">filename</h4>
-<pre><code>new HtmlWebpackPlugin({
-    filename: &apos;order/index.html&apos;
-})
-</code></pre><h4 id="title">title</h4>
-<pre><code>new HtmlWebpackPlugin({
-    title: &apos;Hello Webpack&apos;
-})
-
-&lt;%= htmlWebpackPlugin.options.title %&gt;
-</code></pre><h4 id="template">template</h4>
-<pre><code>new HtmlWebpackPlugin({
-    template: &apos;template.html&apos;
-})
-</code></pre><h4 id="templatecontent">templateContent</h4>
-<p>inline html</p>
-<h4 id="templateparameters">templateParameters</h4>
-<pre><code>new HtmlwebpackPlugin({
-    templateParameters: {
-        __base_style__: &apos;&lt;style&gt; .app { red } &lt;/style&gt;&apos;
+<h3 id="redux-&#x7684;&#x57FA;&#x7840;&#x5E94;&#x7528;">Redux &#x7684;&#x57FA;&#x7840;&#x5E94;&#x7528;</h3>
+<p>&#x57FA;&#x7840;&#x7684;&#x56DB;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;createStore&#xFF0C;getState&#xFF0C;subscribe&#xFF0C;dispatch</p>
+<pre><code>function reducer (state, action) {
+    switch (action.type) {
+        case &apos;ADD&apos;:
+            return ++state;
+        case &apos;MINUS&apos;:
+            return --state;
+        default:
+            return state;
     }
+}
+const store = createStore(reducer, initialState);
+const unsubscribe = store.subscribe(() =&gt; {
+    console.log(&apos;state&#x53D1;&#x751F;&#x53D8;&#x5316;&#x4E86;&apos;, store.getState());
 })
-</code></pre><h4 id="inject">inject</h4>
-<pre><code>inject: true | false | head | body
+store.dispatch({ type: &apos;ADD&apos; });
 
-true &#x8DDF; body &#x6548;&#x679C;&#x4E00;&#x6837;&#xFF1A;&#x5728;body&#x672B;&#x5C3E;&#x6CE8;&#x5165;
-false&#xFF1A;&#x4E0D;&#x6CE8;&#x5165; js
-head&#xFF1A;&#x5728; head &#x4E2D;&#x6CE8;&#x5165; js
-</code></pre><h4 id="publicpath">publicPath</h4>
-<p>&#x8DDF; output publicPath&#xFF0C;&#x5728;&#x8F93;&#x51FA; js &#x8DEF;&#x5F84;&#x52A0;&#x5165; publicPath</p>
-<h4 id="scriptloading">scriptLoading</h4>
+unsubscribe();
+</code></pre><h4 id="&#x57FA;&#x7840;&#x67B6;&#x6784;&#x5B9E;&#x73B0;">&#x57FA;&#x7840;&#x67B6;&#x6784;&#x5B9E;&#x73B0;</h4>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x70B9;&#xFF1A;</p>
 <ol>
-<li>blocking&#xFF1A; &#x6B63;&#x5E38;&#x6CE8;&#x5165; js</li>
-<li>defer&#xFF1A;&#x6CE8;&#x5165; js &#x6DFB;&#x52A0; defer &#x5C5E;&#x6027;</li>
+<li>&#x5982;&#x4F55;&#x9632;&#x6B62; unsubscribe &#x591A;&#x6B21;&#x8C03;&#x7528;</li>
+<li><p>&#x5982;&#x4F55;&#x5224;&#x65AD;&#x662F;&#x5426;&#x662F;&#x4E2A;&#x7EAF;&#x5BF9;&#x8C61;</p>
+<pre><code>function createStore (reducer, initialState) {
+ let currentState = initialState;
+ let currentReducer = reducer;
+ let currentListeners = [];
+
+ function getState () {
+     return currentState;
+ }
+
+ function subscribe (listener) {
+     if (typeof listener !== &apos;function&apos;) {
+         throw new Error(&apos;&#x8BA2;&#x9605;&#x53C2;&#x6570;&#x5FC5;&#x987B;&#x4E3A;&#x51FD;&#x6570;&apos;)
+     }
+
+     let idx = currentListeners.push(listener);
+     let isSubscribed = true;
+     function unsubscribe () {
+         if (!isSubscribe) {
+             return
+         }
+         currentListeners.splice(idx - 1, 1);
+         isSubscribe = false
+     }
+ }
+
+ function dispatch (action) {
+     if (!isPlainObject(action)) {
+         throw new Error(&apos;action &#x5FC5;&#x987B;&#x662F;&#x4E2A;&#x7EAF;&#x5BF9;&#x8C61;&apos;)
+     }
+     if (!action || action.type) {
+         throw new Error(&apos;action &#x5FC5;&#x987B;&#x8981;&#x6709;&#x4E00;&#x4E2A;type&#x5C5E;&#x6027;&apos;)
+     }
+     currentState = currentReducer(currentState, action);
+     for (let listener of currentListeners) {
+         listener();
+     }
+ }
+
+ return {
+     getState,
+     dispatch,
+     subscribe,
+ }
+}
+</code></pre></li>
 </ol>
-<pre><code>scriptLoading: blocking | defer
-</code></pre><h4 id="favicon">favicon</h4>
-<p>&#x6CE8;&#x5165; favicon&#xFF0C;&#x26A0;&#xFE0F; &#xFF1A;&#x9700;&#x8981;&#x662F;&#x672C;&#x5730;&#x7684;&#xFF0C;&#x4F1A;&#x5E26;&#x4E0A; publicPath &#x524D;&#x7F00;</p>
-<h4 id="minify">minify</h4>
-<p>&#x538B;&#x7F29;&#xFF0C;true | false</p>
-<h4 id="hash">hash</h4>
-<p>js css icon &#x90FD;&#x4F1A;&#x5E26;&#x4E0A; ?hash&#xFF0C;&#x53EF;&#x6709;&#x6548;&#x6E05;&#x695A;&#x7F13;&#x5B58;</p>
-<h4 id="chunks">chunks</h4>
-<p>&#x6CE8;&#x5165;&#x54EA;&#x4E9B; js</p>
-<pre><code>chunks: [&apos;main&apos;]
-</code></pre><h4 id="chunkssortmode">chunksSortMode</h4>
-<pre><code>// &#x63D2;&#x5165; html &#x7684;&#x5F88;&#x591A; chunks&#xFF0C;&#x5982;&#x4F55;&#x6392;&#x5E8F;
-chunks: [&apos;index&apos;, &apos;main&apos;],
-chunksSortMode: &apos;auto | manual&apos;
-</code></pre><h4 id="excludechunks">excludeChunks</h4>
-<p>&#x4E0D;&#x5305;&#x542B;&#x7684; chunks </p>
-<footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-11-09 15:03:00
+<h4 id="&#x7EAF;&#x5BF9;&#x8C61;">&#x7EAF;&#x5BF9;&#x8C61;</h4>
+<p>&#x5BF9;&#x8C61;&#x7684;&#x539F;&#x578B;&#x662F; Object.prototype</p>
+<pre><code>function isPlainObject (obj) {
+    if (typeof obj !== &apos;object&apos; || obj === null) {
+        return false;
+    }
+    return Object.getPrototypeOf(obj) === Object.prototype
+}
+</code></pre><footer class="page-footer"><span class="copyright">Copyright &#xA9; qiangxu@clubfactory.com 2020 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x7AE0;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2020-11-30 19:27:21
 </span></footer>
                                 
                                 </section>
@@ -395,14 +406,10 @@ chunksSortMode: &apos;auto | manual&apos;
 
             
                 
-                <a href="../1/1.html" class="navigation navigation-prev " aria-label="Previous page: webpack做过哪些优化？开发效率，打包策略等">
+                <a href="../6/1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 有哪些生命周期">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="../3/1.html" class="navigation navigation-next " aria-label="Next page: 有哪些有用的 webpack 插件">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -411,7 +418,7 @@ chunksSortMode: &apos;auto | manual&apos;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"HtmlWebpackPlugin 的配置","level":"1.2.1.2","depth":3,"next":{"title":"有哪些有用的 webpack 插件","level":"1.2.1.3","depth":3,"path":"interview/webpack/3/1.md","ref":"interview/webpack/3/1.md","articles":[]},"previous":{"title":"webpack做过哪些优化？开发效率，打包策略等","level":"1.2.1.1","depth":3,"path":"interview/webpack/1/1.md","ref":"interview/webpack/1/1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/webpack/2/1.md","mtime":"2020-11-09T07:03:00.160Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-17T10:28:05.133Z"},"basePath":"../../..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"如何开发一个 redux","level":"1.2.1.7","depth":3,"previous":{"title":"有哪些生命周期","level":"1.2.1.6","depth":3,"path":"interview/react/6/1.md","ref":"interview/react/6/1.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["hide-element","back-to-top-button","chapter-fold","code","splitter","-lunr","-search","search-pro","pageview-count","tbfed-pagefooter","livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy qiangxu@clubfactory.com 2020","modify_label":"该文章修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"chapter-fold":{},"livereload":{},"splitter":{},"search-pro":{},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"pageview-count":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"interview/react/7/1.md","mtime":"2020-11-30T11:27:21.764Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-11-30T03:03:13.976Z"},"basePath":"../../..","book":{"language":""}});
         });
     </script>
 </div>
